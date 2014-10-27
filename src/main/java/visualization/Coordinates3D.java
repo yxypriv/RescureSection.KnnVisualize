@@ -42,17 +42,21 @@ public class Coordinates3D {
 		origin_y = (panelHeight - panelTop) * 2 / 3 + panelLeft;
 
 		range = new double[3][];
-		for (int i = 0; i < range.length; i++)
-			range[i] = new double[] { 0, 10 * (i + 1) };
-		scale = new double[] { 10, 10, 10 };
+		// for (int i = 0; i < range.length; i++)
+		// range[i] = new double[] { 0, 10 * (i + 1) };
+		 scale = new double[] { 10, 10, 10 };
 	}
 
 	public void extendRange(double[] point) {
 		for (int i = 0; i < 3; i++) {
-			if (range[i][0] > point[i])
-				range[i][0] = point[i];
-			if (range[i][1] < point[i])
-				range[i][1] = point[i];
+			if (range[i] == null) {
+				range[i] = new double[]{point[i], point[i]};
+			} else {
+				if (range[i][0] > point[i])
+					range[i][0] = point[i];
+				if (range[i][1] < point[i])
+					range[i][1] = point[i];
+			}
 		}
 	}
 
@@ -67,9 +71,14 @@ public class Coordinates3D {
 	private void computScaleRange() {
 		int[][] axisRange = getAxisRange();
 		if (option == OPTION_RANGE) {
+			double[][] thisRange = range;
+			if (thisRange[0] == null) {
+				for (int i = 0; i < range.length; i++)
+					thisRange[i] = new double[] { 0, 10 * (i + 1) };
+			}
 			for (int i = 0; i < 3; i++) {
-				range[i] = new double[] { Math.floor(range[i][0]), Math.ceil(range[i][1]) };
-				int rangeContain = (int) (range[i][1] - range[i][0] + 1);
+				thisRange[i] = new double[] { Math.floor(thisRange[i][0]), Math.ceil(thisRange[i][1]) };
+				int rangeContain = (int) (thisRange[i][1] - thisRange[i][0] + 1);
 				double plotAxisLength = Math.sqrt(Math.pow(axisRange[i][0] - axisRange[i][2], 2) + Math.pow(axisRange[i][1] - axisRange[i][3], 2));
 				scale[i] = plotAxisLength / rangeContain;
 			}
@@ -131,19 +140,24 @@ public class Coordinates3D {
 		int delta_x = 0;
 		int delta_y = 0;
 		for (int i = 0; i < 3; i++) {
-			int skip = (int) Math.ceil(minimumCoordinateIntervel / scale[i]);
-			double plotAxisLength = Math.sqrt(Math.pow(axisRange[i][0] - axisRange[i][2], 2) + Math.pow(axisRange[i][1] - axisRange[i][3], 2));
-			for (int j = 1; j * scale[i] * skip < plotAxisLength; j++) {
-				double delta_length = j * scale[i] * skip;
-				double ratio = delta_length / plotAxisLength;
-				int vector_x = (int) ((axisRange[i][2] - axisRange[i][0]) * ratio);
-				int vector_y = (int) ((axisRange[i][3] - axisRange[i][1]) * ratio);
-				delta_x += vector_x;
-				delta_y += vector_y;
-			}
+			// int skip = (int) Math.ceil(minimumCoordinateIntervel / scale[i]);
+			// double plotAxisLength = Math.sqrt(Math.pow(axisRange[i][0] -
+			// axisRange[i][2], 2) + Math.pow(axisRange[i][1] - axisRange[i][3],
+			// 2));
+			// for (int j = 1; j * scale[i] * skip < plotAxisLength; j++) {
+			// double delta_length = j * scale[i] * skip;
+			// double ratio = delta_length / plotAxisLength;
+			double delta = point[i] - range[i][0];
+			double ratio = delta / (range[i][1] - range[i][0]);
+			int vector_x = (int) ((axisRange[i][2] - axisRange[i][0]) * ratio);
+			int vector_y = (int) ((axisRange[i][3] - axisRange[i][1]) * ratio);
+			delta_x += vector_x;
+			delta_y += vector_y;
+			// }
 		}
 		int plot_x = origin_x + delta_x;
 		int plot_y = origin_y + delta_y;
+//		System.out.println("point: " + plot_x + "\t" + plot_y);
 		g2.drawOval(plot_x - 1, plot_y - 1, 3, 3);
 	}
 }

@@ -1,5 +1,6 @@
 package visualization;
 
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class KNNVisualizationFrame extends JFrame {
 		initPanel();
 		repaint();
 	}
+	final KNNVisualizationFrame frame = this;
 
 	public void initMenu() {
 		JMenuBar bar = new JMenuBar();
@@ -45,13 +47,13 @@ public class KNNVisualizationFrame extends JFrame {
 		JMenuItem openSourceItem = new JMenuItem("Open");
 		openSourceItem.setMnemonic(KeyEvent.VK_O);
 
-		final KNNVisualizationFrame frame = this;
 		openSourceItem.addActionListener(new LoadFileActionListener(//
 				"sourceFile", frame, new ActionCallback() {
 					public void process(String path) {
 						if (null != path) {
 							List<Visualizable> sourceData = CSVFileParser.parseOutsource(path, KNNPoint.class);
 							coordinatePanel.setAlgorithm(new KNNAlgorithm(sourceData));
+							frame.repaint();
 						}
 					}
 				}));
@@ -64,6 +66,12 @@ public class KNNVisualizationFrame extends JFrame {
 		coordinatePanel = new KNNCoordinatePanel(this);
 		add(coordinatePanel);
 		coordinatePanel.repaint();
+	}
+
+	@Override
+	public void paintComponents(Graphics g) {
+		super.paintComponents(g);
+
 	}
 
 	public static void main(String[] args) {

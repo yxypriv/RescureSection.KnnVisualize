@@ -19,11 +19,11 @@ public class KNNAlgorithm {
 	public KNNAlgorithm(List<Visualizable> points) {
 		this.points = points;
 	}
-	
+
 	public String cluster(Visualizable newPoint) {
 		return cluster(newPoint, default_K);
 	}
-	
+
 	public String cluster(Visualizable newPoint, int K) {
 		List<Visualizable> knn = getKNN(newPoint, K);
 		Pair<String, Integer> mostHits = HitsUtil.getMostHits(knn, new ILabeler<Visualizable>() {
@@ -107,4 +107,13 @@ public class KNNAlgorithm {
 			return this.distance.compareTo(o.distance);
 		}
 	}
+
+	public List<Visualizable> getPoints() {
+		return points;
+	}
+
+	public void setPoints(List<Visualizable> points) {
+		this.points = points;
+	}
+
 }
