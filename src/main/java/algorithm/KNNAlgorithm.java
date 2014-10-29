@@ -9,15 +9,18 @@ import java.util.concurrent.PriorityBlockingQueue;
 import utils.ILabeler;
 import utils.algorithms.HitsUtil;
 import utils.general.Pair;
+import utils.io.CSVFileParser.CSVParseResult;
 import algorithm.interfaces.Visualizable;
 
 public class KNNAlgorithm {
 
 	List<Visualizable> points;
+	List<String> featureTitles;
 	int default_K = 5;
 
-	public KNNAlgorithm(List<Visualizable> points) {
-		this.points = points;
+	public KNNAlgorithm(CSVParseResult data) {
+		this.points = data.getData();
+		this.featureTitles = data.getTitles();
 	}
 
 	public String cluster(Visualizable newPoint) {
@@ -114,6 +117,14 @@ public class KNNAlgorithm {
 
 	public void setPoints(List<Visualizable> points) {
 		this.points = points;
+	}
+
+	public List<String> getFeatureTitles() {
+		return featureTitles;
+	}
+
+	public void setFeatureTitles(List<String> featureTitles) {
+		this.featureTitles = featureTitles;
 	}
 
 }

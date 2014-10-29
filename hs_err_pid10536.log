@@ -1,0 +1,211 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1282736 bytes for Chunk::new
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:323), pid=10536, tid=16260
+#
+# JRE version: Java(TM) SE Runtime Environment (7.0_45-b18) (build 1.7.0_45-b18)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (24.45-b08 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000000000aeb0800):  JavaThread "C2 CompilerThread1" daemon [_thread_in_native, id=16260, stack(0x000000000c520000,0x000000000c620000)]
+
+Stack: [0x000000000c520000,0x000000000c620000]
+
+Current CompileTask:
+C2:   6385   44             visualization.Coordinates3D::paintCoordinates (439 bytes)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x0000000002ab2800 JavaThread "DestroyJavaVM" [_thread_blocked, id=17580, stack(0x00000000029b0000,0x0000000002ab0000)]
+  0x000000000c8be800 JavaThread "AWT-EventQueue-0" [_thread_in_native, id=21976, stack(0x000000000d210000,0x000000000d310000)]
+  0x000000000c8bd800 JavaThread "AWT-Windows" daemon [_thread_in_native, id=21700, stack(0x000000000cf10000,0x000000000d010000)]
+  0x000000000c8bd000 JavaThread "AWT-Shutdown" [_thread_blocked, id=20460, stack(0x000000000ce10000,0x000000000cf10000)]
+  0x000000000c8bc000 JavaThread "Java2D Disposer" daemon [_thread_blocked, id=10992, stack(0x000000000cd10000,0x000000000ce10000)]
+  0x000000000aec9800 JavaThread "Service Thread" daemon [_thread_blocked, id=7528, stack(0x000000000c620000,0x000000000c720000)]
+=>0x000000000aeb0800 JavaThread "C2 CompilerThread1" daemon [_thread_in_native, id=16260, stack(0x000000000c520000,0x000000000c620000)]
+  0x000000000aeaf000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=22000, stack(0x000000000c420000,0x000000000c520000)]
+  0x000000000aeae000 JavaThread "Attach Listener" daemon [_thread_blocked, id=3960, stack(0x000000000c320000,0x000000000c420000)]
+  0x000000000aead000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=168, stack(0x000000000c220000,0x000000000c320000)]
+  0x000000000ae5e000 JavaThread "Finalizer" daemon [_thread_blocked, id=15072, stack(0x000000000c120000,0x000000000c220000)]
+  0x000000000ae52800 JavaThread "Reference Handler" daemon [_thread_blocked, id=17312, stack(0x000000000c020000,0x000000000c120000)]
+
+Other Threads:
+  0x000000000ae51000 VMThread [stack: 0x000000000bf20000,0x000000000c020000] [id=14940]
+  0x000000000aed6800 WatcherThread [stack: 0x000000000c720000,0x000000000c820000] [id=15080]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ PSYoungGen      total 38400K, used 12863K [0x00000007d5e80000, 0x00000007d8900000, 0x0000000800000000)
+  eden space 33280K, 38% used [0x00000007d5e80000,0x00000007d6b0ff80,0x00000007d7f00000)
+  from space 5120K, 0% used [0x00000007d8400000,0x00000007d8400000,0x00000007d8900000)
+  to   space 5120K, 0% used [0x00000007d7f00000,0x00000007d7f00000,0x00000007d8400000)
+ ParOldGen       total 86016K, used 0K [0x0000000781c00000, 0x0000000787000000, 0x00000007d5e80000)
+  object space 86016K, 0% used [0x0000000781c00000,0x0000000781c00000,0x0000000787000000)
+ PSPermGen       total 21504K, used 8503K [0x000000077ca00000, 0x000000077df00000, 0x0000000781c00000)
+  object space 21504K, 39% used [0x000000077ca00000,0x000000077d24df88,0x000000077df00000)
+
+Card table byte_map: [0x0000000005c70000,0x0000000006090000] byte_map_base: 0x000000000208b000
+
+Polling page: 0x0000000000c60000
+
+Code Cache  [0x0000000002bb0000, 0x0000000002e20000, 0x0000000005bb0000)
+ total_blobs=433 nmethods=46 adapters=339 free_code_cache=48602Kb largest_free_block=49744960
+
+Compilation events (10 events):
+Event: 5.996 Thread 0x000000000aeb0800   40             java.awt.Component::getParent_NoClientCode (5 bytes)
+Event: 5.997 Thread 0x000000000aeb0800 nmethod 40 0x0000000002c3c010 code [0x0000000002c3c140, 0x0000000002c3c1b8]
+Event: 6.112 Thread 0x000000000aeaf000   41             java.util.HashMap::getEntry (86 bytes)
+Event: 6.116 Thread 0x000000000aeaf000 nmethod 41 0x0000000002c38a90 code [0x0000000002c38be0, 0x0000000002c38de8]
+Event: 6.199 Thread 0x000000000aeb0800   42             java.lang.Number::<init> (5 bytes)
+Event: 6.199 Thread 0x000000000aeb0800 nmethod 42 0x0000000002c3c210 code [0x0000000002c3c340, 0x0000000002c3c398]
+Event: 6.208 Thread 0x000000000aeaf000   43             java.awt.Component::getParent (5 bytes)
+Event: 6.208 Thread 0x000000000aeaf000 nmethod 43 0x0000000002c38890 code [0x0000000002c389c0, 0x0000000002c38a38]
+Event: 6.223 Thread 0x000000000aeb0800   44             visualization.Coordinates3D::paintCoordinates (439 bytes)
+Event: 6.377 Thread 0x000000000aeaf000   45   !         sun.java2d.SunGraphics2D::drawLine (74 bytes)
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (4 events):
+Event: 0.649 Thread 0x000000000c8be800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x0000000002c29d50 method=java.lang.String.equals(Ljava/lang/Object;)Z @ 8
+Event: 0.651 Thread 0x000000000c8be800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x0000000002c29d50 method=java.lang.String.equals(Ljava/lang/Object;)Z @ 8
+Event: 0.652 Thread 0x000000000c8be800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x0000000002c29d50 method=java.lang.String.equals(Ljava/lang/Object;)Z @ 8
+Event: 0.652 Thread 0x000000000c8be800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x0000000002c29d50 method=java.lang.String.equals(Ljava/lang/Object;)Z @ 8
+
+Internal exceptions (10 events):
+Event: 0.410 Thread 0x000000000c8be800 Threw 0x00000007d61b5418 at C:\re\jdk7u45\229\hotspot\src\share\vm\prims\jvm.cpp:1244
+Event: 0.461 Thread 0x000000000c8be800 Threw 0x00000007d61ba488 at C:\re\jdk7u45\229\hotspot\src\share\vm\prims\jvm.cpp:1244
+Event: 0.483 Thread 0x000000000c8be800 Threw 0x00000007d61beff8 at C:\re\jdk7u45\229\hotspot\src\share\vm\prims\jvm.cpp:1244
+Event: 0.528 Thread 0x000000000c8be800 Threw 0x00000007d61c3d30 at C:\re\jdk7u45\229\hotspot\src\share\vm\prims\jvm.cpp:1244
+Event: 0.594 Thread 0x000000000c8be800 Threw 0x00000007d61ea440 at C:\re\jdk7u45\229\hotspot\src\share\vm\prims\jni.cpp:717
+Event: 0.594 Thread 0x000000000c8be800 Threw 0x00000007d61eaa48 at C:\re\jdk7u45\229\hotspot\src\share\vm\interpreter\linkResolver.cpp:883
+Event: 0.627 Thread 0x000000000c8be800 Threw 0x00000007d621cf60 at C:\re\jdk7u45\229\hotspot\src\share\vm\prims\jvm.cpp:1244
+Event: 0.627 Thread 0x000000000c8be800 Threw 0x00000007d621d188 at C:\re\jdk7u45\229\hotspot\src\share\vm\prims\jvm.cpp:1244
+Event: 0.628 Thread 0x000000000c8be800 Threw 0x00000007d6224278 at C:\re\jdk7u45\229\hotspot\src\share\vm\prims\jvm.cpp:1244
+Event: 0.628 Thread 0x000000000c8be800 Threw 0x00000007d62244a0 at C:\re\jdk7u45\229\hotspot\src\share\vm\prims\jvm.cpp:1244
+
+Events (10 events):
+Event: 0.740 loading class 0x000000000aeab160
+Event: 0.740 loading class 0x000000000aeab160 done
+Event: 0.740 loading class 0x000000000c8b7420
+Event: 0.740 loading class 0x000000000c8b7420 done
+Event: 0.740 loading class 0x000000000c8377e0
+Event: 0.740 loading class 0x000000000c8377e0 done
+Event: 0.742 loading class 0x0000000002ab6b80
+Event: 0.742 loading class 0x0000000002ab6b80 done
+Event: 4.190 Executing VM operation: EnableBiasedLocking
+Event: 4.190 Executing VM operation: EnableBiasedLocking done
+
+
+Dynamic libraries:
+0x00007ff77b2f0000 - 0x00007ff77b323000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\bin\javaw.exe
+0x00007ff88eee0000 - 0x00007ff88f086000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ff88d520000 - 0x00007ff88d65a000 	C:\Windows\system32\KERNEL32.DLL
+0x00007ff88c610000 - 0x00007ff88c71f000 	C:\Windows\system32\KERNELBASE.dll
+0x00007ff88aec0000 - 0x00007ff88af48000 	C:\Windows\system32\apphelp.dll
+0x00007ff878f70000 - 0x00007ff878fbf000 	C:\Windows\AppPatch\AppPatch64\AcGenral.DLL
+0x00007ff88cf30000 - 0x00007ff88cfd7000 	C:\Windows\system32\msvcrt.dll
+0x00007ff88c040000 - 0x00007ff88c06b000 	C:\Windows\SYSTEM32\SspiCli.dll
+0x00007ff88ca50000 - 0x00007ff88caa1000 	C:\Windows\system32\SHLWAPI.dll
+0x00007ff88c780000 - 0x00007ff88c8f1000 	C:\Windows\system32\USER32.dll
+0x00007ff88d800000 - 0x00007ff88d978000 	C:\Windows\system32\ole32.dll
+0x00007ff88d980000 - 0x00007ff88ed8f000 	C:\Windows\system32\SHELL32.dll
+0x00007ff88b870000 - 0x00007ff88b88e000 	C:\Windows\SYSTEM32\USERENV.dll
+0x00007ff88cd60000 - 0x00007ff88ce05000 	C:\Windows\system32\ADVAPI32.dll
+0x00007ff87efe0000 - 0x00007ff87effb000 	C:\Windows\SYSTEM32\MPR.dll
+0x00007ff88d660000 - 0x00007ff88d797000 	C:\Windows\system32\RPCRT4.dll
+0x00007ff88cb10000 - 0x00007ff88cb67000 	C:\Windows\SYSTEM32\sechost.dll
+0x00007ff88cb80000 - 0x00007ff88cd56000 	C:\Windows\SYSTEM32\combase.dll
+0x00007ff88ed90000 - 0x00007ff88eed4000 	C:\Windows\system32\GDI32.dll
+0x00007ff88c260000 - 0x00007ff88c274000 	C:\Windows\SYSTEM32\profapi.dll
+0x00007ff888bf0000 - 0x00007ff888c8f000 	C:\Windows\SYSTEM32\SHCORE.dll
+0x00007ff88d4e0000 - 0x00007ff88d514000 	C:\Windows\system32\IMM32.DLL
+0x00007ff88c900000 - 0x00007ff88ca39000 	C:\Windows\system32\MSCTF.dll
+0x00007ff8886f0000 - 0x00007ff88894a000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9600.17031_none_6242a4b3ecbb55a1\COMCTL32.dll
+0x0000000067fb0000 - 0x0000000068082000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\msvcr100.dll
+0x0000000067330000 - 0x0000000067af9000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\server\jvm.dll
+0x00007ff883000000 - 0x00007ff883009000 	C:\Windows\SYSTEM32\WSOCK32.dll
+0x00007ff886ac0000 - 0x00007ff886adf000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ff88c770000 - 0x00007ff88c777000 	C:\Windows\system32\PSAPI.DLL
+0x00007ff88cab0000 - 0x00007ff88cb08000 	C:\Windows\system32\WS2_32.dll
+0x00007ff886a90000 - 0x00007ff886aba000 	C:\Windows\SYSTEM32\WINMMBASE.dll
+0x00007ff88ca40000 - 0x00007ff88ca49000 	C:\Windows\system32\NSI.dll
+0x00007ff88c330000 - 0x00007ff88c37a000 	C:\Windows\SYSTEM32\cfgmgr32.dll
+0x00007ff88b0e0000 - 0x00007ff88b106000 	C:\Windows\SYSTEM32\DEVOBJ.dll
+0x00000000690d0000 - 0x00000000690df000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\verify.dll
+0x0000000069080000 - 0x00000000690a8000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\java.dll
+0x0000000069060000 - 0x0000000069075000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\zip.dll
+0x0000000066ae0000 - 0x0000000066c75000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\awt.dll
+0x00007ff88cfe0000 - 0x00007ff88d097000 	C:\Windows\system32\OLEAUT32.dll
+0x00007ff88af60000 - 0x00007ff88b081000 	C:\Windows\system32\uxtheme.dll
+0x00007ff888a20000 - 0x00007ff888a40000 	C:\Windows\system32\dwmapi.dll
+0x00007ff88b130000 - 0x00007ff88b13a000 	C:\Windows\SYSTEM32\kernel.appcore.dll
+0x00007ff88c1d0000 - 0x00007ff88c1da000 	C:\Windows\SYSTEM32\CRYPTBASE.dll
+0x00007ff88c070000 - 0x00007ff88c0d0000 	C:\Windows\SYSTEM32\bcryptPrimitives.dll
+0x0000000067f60000 - 0x0000000067fa6000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\fontmanager.dll
+0x0000000068500000 - 0x0000000068519000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\net.dll
+0x00007ff88bac0000 - 0x00007ff88bb18000 	C:\Windows\system32\mswsock.dll
+0x00000000684e0000 - 0x00000000684f1000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\nio.dll
+0x0000000067f10000 - 0x0000000067f51000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\t2k.dll
+0x0000000068480000 - 0x00000000684aa000 	C:\Users\Xingyu\AppData\Local\MyEclipse Professional 2014\binary\com.sun.java.jdk7.win32.x86_64_1.7.0.u45\jre\bin\dcpr.dll
+0x00007ff88d430000 - 0x00007ff88d4d4000 	C:\Windows\SYSTEM32\clbcatq.dll
+0x00007ff87ac00000 - 0x00007ff87ac8a000 	C:\Windows\system32\SogouTSF.ime
+0x00007ff886390000 - 0x00007ff88639a000 	C:\Windows\system32\VERSION.dll
+0x00007ff8866a0000 - 0x00007ff8866a7000 	C:\Windows\system32\MSIMG32.dll
+0x00007ff886420000 - 0x00007ff886450000 	C:\Windows\SYSTEM32\ntmarta.dll
+0x00007ff864800000 - 0x00007ff864f5f000 	C:\Windows\system32\SogouPy.ime
+0x00007ff8871f0000 - 0x00007ff887253000 	C:\Windows\SYSTEM32\OLEACC.dll
+0x00007ff878b60000 - 0x00007ff878bae000 	C:\Program Files (x86)\SogouInput\Components\SGImeGuard\1.0.0.27\SGImeGuard64.dll
+0x0000000012180000 - 0x0000000012244000 	C:\Program Files (x86)\SogouInput\7.4.0.3734\Resource.dll
+0x00007ff87a910000 - 0x00007ff87aac1000 	C:\Program Files (x86)\SogouInput\Components\PicFace\1.0.0.1112\PicFace64.dll
+0x00007ff87cbe0000 - 0x00007ff87cc0a000 	C:\Program Files (x86)\SogouInput\Components\SgAppender\1.0.0.207\SgAppender_Dll64.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=UTF-8 
+java_command: visualization.KNNVisualizationFrame
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.7.0_67
+PATH=c:\Program Files (x86)\Intel\iCLS Client\;c:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\programs\MiKTeX2.9\miktex\bin\x64\;C:\Program Files\Git\cmd;C:\Program Files\MySQL\MySQL Server 5.7\bin;4.94066E-324NU_HOME\bin;C:\D\apache-maven-3.2.3\bin\;
+USERNAME=Xingyu
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 69 Stepping 1, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 8 , 64 bit Build 9200 
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 69 stepping 1, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, erms, ht, tsc, tscinvbit
+
+Memory: 4k page, physical 8266712k(2072928k free), swap 33432536k(6200k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (24.45-b08) for windows-amd64 JRE (1.7.0_45-b18), built on Oct  8 2013 05:47:22 by "java_re" with unknown MS VC++:1600
+
+time: Mon Oct 27 13:53:52 2014
+elapsed time: 6 seconds
+

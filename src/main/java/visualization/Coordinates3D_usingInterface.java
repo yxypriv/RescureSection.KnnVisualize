@@ -1,17 +1,26 @@
 package visualization;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Coordinates3D {
+import visualization.interfaces.Projector;
+import visualization.projector.GeneralProjector;
+
+public class Coordinates3D_usingInterface {
 	public static final int OPTION_SCALE = 1;
 	public static final int OPTION_RANGE = 2;
 
-	private static final double arcsInit[] = new double[] { 0, -120 * 2 * Math.PI / 360, 90 * 2 * Math.PI / 360 };
+	private static final double arcsInit[] = new double[] { 0, -135 * 2 * Math.PI / 360, 90 * 2 * Math.PI / 360 };
 
 	private static int minimumCoordinateIntervel = 20;
 	private static int padding = 50;
 
+	Projector projector = new GeneralProjector();
+	
 	int rotate = 0;
+	double[] camera;
+	double[] orientation;
+	double[] viewPosition;
 	int axisLength = 400;
 	private int option;
 
@@ -26,12 +35,12 @@ public class Coordinates3D {
 	Integer origin_x = null;
 	Integer origin_y = null;
 
-	public Coordinates3D(int option) {
+	public Coordinates3D_usingInterface(int option) {
 		this.option = option;
 		init();
 	}
 
-	public Coordinates3D(int panelTop, int panelLeft, int panelWidth, int panelHeight, int option) {
+	public Coordinates3D_usingInterface(int panelTop, int panelLeft, int panelWidth, int panelHeight, int option) {
 		super();
 		this.panelTop = panelTop;
 		this.panelLeft = panelLeft;
@@ -46,9 +55,13 @@ public class Coordinates3D {
 		origin_y = (panelHeight - panelTop) * 2 / 3 + panelLeft;
 
 		range = new double[3][];
+		camera = new double[]{100, 100, 100};
+		orientation = new double[3];
+		viewPosition = new double[]{-10, -10, -10};
 		// for (int i = 0; i < range.length; i++)
 		// range[i] = new double[] { 0, 10 * (i + 1) };
-		scale = new double[] { 10, 10, 10 };
+		scale = new double[] { 0, 0, 0 };
+		
 	}
 
 	// -----------------------actions-----------------------------------
@@ -74,11 +87,9 @@ public class Coordinates3D {
 	}
 
 	public void rotate(double[] angle) {
-		rotate += angle[0];
-		if (rotate > 180) {
-			rotate -= 360;
-		} else if (rotate <= -180) {
-			rotate += 360;
+		for(int i=0; i<2; i++) {
+			double arc = angle[i] * 2 * Math.PI / 360;
+			orientation[i] = (orientation[i] + arc + Math.PI) % (2 * Math.PI) - Math.PI;
 		}
 	}
 
@@ -87,7 +98,7 @@ public class Coordinates3D {
 	}
 
 	private void computScaleRange() {
-		// int[][] axisRange = getAxisRange();
+//		int[][] axisRange = getAxisRange();
 		if (option == OPTION_RANGE) {
 			for (int i = 0; i < 3; i++) {
 				double[] normalizedRange = new double[] { Math.floor(getRange()[i][0]), Math.ceil(getRange()[i][1]) };
@@ -96,9 +107,7 @@ public class Coordinates3D {
 				// "\t" + normalizedRange[1]);
 				// }
 				int rangeContain = (int) (normalizedRange[1] - normalizedRange[0] + 1);
-				// double plotAxisLength = Math.sqrt(Math.pow(axisRange[i][0] -
-				// axisRange[i][2], 2) + Math.pow(axisRange[i][1] -
-				// axisRange[i][3], 2));
+//				double plotAxisLength = Math.sqrt(Math.pow(axisRange[i][0] - axisRange[i][2], 2) + Math.pow(axisRange[i][1] - axisRange[i][3], 2));
 				scale[i] = axisLength / rangeContain;
 			}
 		} else {
@@ -134,18 +143,17 @@ public class Coordinates3D {
 		int[][] axisInitRange = getAxisInitRange();
 		double[] axis = new double[2]; // x, y
 		for (int i = 0; i < 2; i++) {
-			axis[i] = getRange()[i][0] * 0.9;
-			// axis[i] = (getRange()[i][0] + getRange()[i][1]) / 2;
+			axis[i] = (getRange()[i][0] + getRange()[i][1]) / 2;
 			// axis[i] = getRange()[i][1];
 		}
 		double[] newOriginValue = getRotateValueAroundAxis(axis, //
 				new double[] { getRange()[0][0], getRange()[1][0], getRange()[2][0] }, rotate);
-		int[] originPlot = getPlotPointGivingValueInAxisRange(newOriginValue, getRange(), axisInitRange);
-
+		int[] originPlot = getPlotPointGivingValueInAxisRange(newOriginValue, axisInitRange);
+		
 		double rotateArc = rotate * 2 * Math.PI / 360;
 		int[][] axisEnd = new int[3][2];
 		for (int i = 0; i < 3; i++) {
-			if (i < 2) {
+			if(i < 2) {
 				axisEnd[i][0] = (int) (originPlot[0] + Math.cos(arcsInit[i] + rotateArc) * axisLength);
 				axisEnd[i][1] = (int) (originPlot[1] - Math.sin(arcsInit[i] + rotateArc) * axisLength);
 
@@ -187,13 +195,13 @@ public class Coordinates3D {
 		return newValue;
 	}
 
-	private int[] getPlotPointGivingValueInAxisRange(double[] value, double[][] axisValueRange, int[][] axisRange) {
+	private int[] getPlotPointGivingValueInAxisRange(double[] value, int[][] axisRange) {
 
 		int delta_x = 0;
 		int delta_y = 0;
 		for (int i = 0; i < 3; i++) {
-			double delta = value[i] - axisValueRange[i][0];
-			double ratio = delta / (axisValueRange[i][1] - axisValueRange[i][0]);
+			double delta = value[i] - getRange()[i][0];
+			double ratio = delta / (getRange()[i][1] - getRange()[i][0]);
 			int vector_x = (int) ((axisRange[i][2] - axisRange[i][0]) * ratio);
 			int vector_y = (int) ((axisRange[i][3] - axisRange[i][1]) * ratio);
 			delta_x += vector_x;
@@ -211,7 +219,6 @@ public class Coordinates3D {
 		int[][] axisRange = getAxisRange();
 
 		for (int i = 0; i < 3; i++) {
-			// System.out.println(axisRange[i][2] + "\t" + axisRange[i][3]);
 			g2.drawLine(axisRange[i][0], axisRange[i][1], axisRange[i][2], axisRange[i][3]);
 		}
 
@@ -240,37 +247,16 @@ public class Coordinates3D {
 		}
 	}
 
-	public int[] paintPoint(Graphics2D g2, double[] point, int radius) {
+	public void paintPoint(Graphics2D g2, double[] point) {
 		extendRange(point);
 		// System.out.println("x range:" + range[0][0] + "\t" + range[0][1]);
-		computScaleRange();
-		int[][] axisRange = getAxisRange();
-		int[] plot = getPlotPointGivingValueInAxisRange(point, getRange(), axisRange);
-		g2.drawOval(plot[0] - radius, plot[1] - radius, 2 * radius + 1, 2 * radius + 1);
-		return plot;
-	}
-
-	public int[] paintRect(Graphics2D g2, double[] point, int radius, boolean fill) {
-		extendRange(point);
-		// System.out.println("x range:" + range[0][0] + "\t" + range[0][1]);
-		computScaleRange();
-		int[][] axisRange = getAxisRange();
-		int[] plot = getPlotPointGivingValueInAxisRange(point, getRange(), axisRange);
-		if (fill)
-			g2.fillRect(plot[0] - radius, plot[1] - radius, 2 * radius + 1, 2 * radius + 1);
-		else
-			g2.drawRect(plot[0] - radius, plot[1] - radius, 2 * radius + 1, 2 * radius + 1);
-		return plot;
-	}
-	
-	public void paintLine(Graphics2D g2, double[] point1, double[] point2) {
-		extendRange(point1);
-		extendRange(point2);
-		// System.out.println("x range:" + range[0][0] + "\t" + range[0][1]);
-		computScaleRange();
-		int[][] axisRange = getAxisRange();
-		int[] plot1 = getPlotPointGivingValueInAxisRange(point1, getRange(), axisRange);
-		int[] plot2 = getPlotPointGivingValueInAxisRange(point2, getRange(), axisRange);
-		g2.drawLine(plot1[0],   plot1[1], plot2[0], plot2[1]);
+//		computScaleRange();
+//		int[][] axisRange = getAxisRange();
+		System.out.println(point[0] + "\t" + point[1] + "\t" + point[2]);
+		double[] plot = projector.projectTo2D(point, camera, orientation, viewPosition);
+		
+//		System.out.println(plot[0] + "\t" + plot[1]);
+		g2.setColor(Color.GREEN);
+		g2.drawOval((int)(plot[0]*scale[0] - 1), (int)(plot[1]*scale[1] - 1), 3, 3);
 	}
 }
